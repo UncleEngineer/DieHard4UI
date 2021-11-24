@@ -1,6 +1,6 @@
 from tkinter import *
 from uncleengineer import thaistock
-from playsound import playsound
+#from playsound import playsound
 import threading
 import pygame
 import time
