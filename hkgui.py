@@ -1,3 +1,7 @@
+# pip install uncleengineer
+# pip install pygame
+
+
 from tkinter import *
 from uncleengineer import thaistock
 #from playsound import playsound
