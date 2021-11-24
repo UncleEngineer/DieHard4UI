@@ -1,6 +1,21 @@
 # GUIDieHard4.py
 
 from tkinter import *
+import threading
+import pygame
+import time
+
+
+pygame.mixer.init()
+def play():
+	# playsound('sound1.mp3')
+	pygame.mixer.music.load("search.mp3")
+	pygame.mixer.music.play(loops=0)
+
+
+def playThread():
+	task = threading.Thread(target=play)
+	task.start()
 
 GUI = Tk()
 GUI.geometry('500x700')
@@ -19,7 +34,9 @@ GUI.configure(background=bg)
 
 # Fullscreen
 GUI.attributes('-fullscreen',False)
-GUI.bind('<F10>', lambda event: GUI.attributes('-fullscreen', not GUI.attributes('-fullscreen')))
+GUI.bind('<F11>', lambda event: GUI.attributes('-fullscreen', not GUI.attributes('-fullscreen')))
+GUI.bind('<Control-f>', lambda event: GUI.attributes('-fullscreen', not GUI.attributes('-fullscreen')))
+GUI.bind('<Control-q>', lambda event: GUI.destroy())
 
 # FONT
 f1 = ('Sprite Coder',20,'bold')
@@ -75,11 +92,15 @@ LResult.place(x=570,y=80)
 from uncleengineer import thaistock
 # ['BANPU ', '11.50', '+0.40', '+3.60%', '25/11/2021 00:19:57']
 def CheckStockPrice(event):
-	stockname = v_stockname.get()
-	print(stockname)
-	result = thaistock(stockname)
-	text = 'STOCK: {}\nPRICE: {}'.format(result[0],result[1])
-	v_result.set(text)
+	playThread()
+	try:
+		stockname = v_stockname.get()
+		print(stockname)
+		result = thaistock(stockname)
+		text = 'STOCK: {}\nPRICE: {}\nCHANGE: {}\n%CHANGE: {}'.format(result[0],result[1],result[2],result[3])
+		v_result.set(text)
+	except:
+		v_result.set('NOT FOUND')
 
 E1.bind('<Return>',CheckStockPrice)
 
